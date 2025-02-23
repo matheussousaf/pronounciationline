@@ -24,6 +24,7 @@ export async function GET(req: Request): Promise<Response> {
     const { searchParams } = new URL(req.url);
     const level = searchParams.get("level") || "C1";
     const validLevels = ["B1", "B2", "C1", "C2"];
+    
     if (!validLevels.includes(level)) {
       return Response.json(
         { error: "Invalid level. Choose from B1, B2, C1, C2." },
@@ -36,6 +37,7 @@ export async function GET(req: Request): Promise<Response> {
     const texts = await parseCSV(filePath);
     
     const filteredTexts = texts.filter((item) => item.label === level);
+
     if (filteredTexts.length === 0) {
       return Response.json(
         { error: "No texts found for this level." },
